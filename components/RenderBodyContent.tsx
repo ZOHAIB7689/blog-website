@@ -9,7 +9,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 // lazy-loaded image component
-const ImageComponent = ({ value, isInline }: any) => {
+const ImageComponent = ({ value, isInline }: { value: any; isInline: boolean }) => {
   const { width, height } = getImageDimensions(value);
   return (
     <div className="my-10 overflow-hidden rounded-[15px]">
@@ -34,7 +34,7 @@ const ImageComponent = ({ value, isInline }: any) => {
   );
 };
 
-const Code = ({ value }: any) => {
+const Code = ({ value }: { value: { language: string; code: string } }) => {
   return (
     <div className="my-10">
       <SyntaxHighlighter language={value.language} style={dracula}>
@@ -44,14 +44,14 @@ const Code = ({ value }: any) => {
   );
 };
 
-const Table = ({ value }: any) => {
+const Table = ({ value }: { value: { rows: { _key: string; cells: string[] }[] } }) => {
   return (
     <div className="my-10">
       <table>
         <tbody>
-          {value.rows.map((row: any) => (
+          {value.rows.map((row: { _key: string; cells: string[] }) => (
             <tr key={row._key}>
-              {row.cells.map((cell: any, key: any) => (
+              {row.cells.map((cell: string, key: number) => (
                 <td
                   key={key}
                   className="first-of-type:bg-gray-100 max-w-[100px]"
@@ -78,7 +78,7 @@ const components = {
 const RenderBodyContent = ({ post }: { post: Blog }) => {
   return (
     <>
-      <PortableText value={post?.body as any} components={components} />
+      <PortableText value={post?.body} components={components} />
     </>
   );
 };
