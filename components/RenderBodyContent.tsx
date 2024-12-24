@@ -9,7 +9,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 // lazy-loaded image component
-const ImageComponent = ({ value, isInline }: { value: any; isInline: boolean }) => {
+const ImageComponent = ({ value, isInline }: { value: { asset: { _ref: string }; alt?: string }; isInline: boolean }) => {
   const { width, height } = getImageDimensions(value);
   return (
     <div className="my-10 overflow-hidden rounded-[15px]">
