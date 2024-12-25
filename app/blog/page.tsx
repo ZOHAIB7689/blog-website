@@ -1,12 +1,14 @@
 import React from "react";
-import { getPostBySlug } from "@/sanity/sanity-utils";
+import { getPostBySlug ,getPosts } from "@/sanity/sanity-utils";
 import RenderBodyContent from "@/components/RenderBodyContent";
 
-const SingleBlogPage = async ({
-  params,
-}: {
-  params: { slug: string };
-}) => {
+interface Params {
+  params: {
+    slug: string;
+  };
+}
+
+const SingleBlogPage = async ({ params }: Params) => {
   const post = await getPostBySlug(params.slug);
 
   return (
@@ -29,5 +31,15 @@ const SingleBlogPage = async ({
     </article>
   );
 };
+
+// Static params generation for Next.js
+export async function generateStaticParams() {
+  const posts = await getPosts(); // Replace with your own logic to fetch posts
+  return posts.map((post: { slug: string }) => ({
+    params: {
+      slug: post.slug,
+    },
+  }));
+}
 
 export default SingleBlogPage;
