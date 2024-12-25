@@ -1,7 +1,7 @@
 import { parseBody } from "next-sanity/webhook";
 import { revalidateTag } from "next/cache";
 import { NextRequest , NextResponse } from "next/server";
-revalidateTag
+
 
 interface WebhookBody {
   _type: string;
