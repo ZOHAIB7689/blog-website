@@ -1,15 +1,24 @@
 import React from "react";
-import { getPostBySlug ,getPosts } from "@/sanity/sanity-utils";
+import { getPostBySlug } from "@/sanity/sanity-utils";
 import RenderBodyContent from "@/components/RenderBodyContent";
+import { notFound } from "next/navigation";
 
-interface Params {
-  params: {
-    slug: string;
-  };
+interface PageParams {
+  slug: string;
 }
 
-const SingleBlogPage = async ({ params }: Params) => {
+interface Author {
+  name: string;
+}
+
+
+
+const SingleBlogPage = async ({ params }: { params: PageParams }) => {
   const post = await getPostBySlug(params.slug);
+
+  if (!post) {
+    notFound();
+  }
 
   return (
     <article className="my-10">
@@ -31,15 +40,5 @@ const SingleBlogPage = async ({ params }: Params) => {
     </article>
   );
 };
-
-// Static params generation for Next.js
-export async function generateStaticParams() {
-  const posts = await getPosts(); // Replace with your own logic to fetch posts
-  return posts.map((post: { slug: string }) => ({
-    params: {
-      slug: post.slug,
-    },
-  }));
-}
 
 export default SingleBlogPage;
