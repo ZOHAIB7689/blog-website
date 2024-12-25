@@ -1,15 +1,9 @@
 import React from "react";
-import { getPostBySlug } from "@/sanity/sanity-utils";
+import { getPostBySlug } from "@/sanity/sanity-utils"
 import RenderBodyContent from "@/components/RenderBodyContent";
 
-// Add Next.js type for dynamic page
-interface SingleBlogPageProps {
-  params: {
-    slug: string;
-  };
-}
 
-const SingleBlogPage = async ({ params }: SingleBlogPageProps) => {
+const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
   const post = await getPostBySlug(params.slug);
 
   return (
@@ -23,7 +17,7 @@ const SingleBlogPage = async ({ params }: SingleBlogPageProps) => {
           {post.author.name}
         </p>
 
-        <p>{post.metadata.slice()}</p>
+        <p>{post.metadata}</p>
       </div>
 
       <article className="prose lg:prose-xl">

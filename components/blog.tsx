@@ -1,21 +1,31 @@
+import { Blog } from "@/types/blog";
 import Link from "next/link";
 import React from "react";
 
-const Header = () => {
-  return (
-    <header className="flex justify-between px-10 py-5 md:px-24 max-w-[1000px] mx-auto">
-      <Link href={"/"} className="text-2xl font-bold underline">
-        Sanity Blog
-      </Link>
+interface BlogItemProps {
+  blog: Blog;
+}
 
-      <nav>
-        <ul className="flex gap-4">
-          <li className="hover:underline cursor-pointer">About</li>
-          <li className="hover:underline cursor-pointer">Contact</li>
-        </ul>
-      </nav>
-    </header>
+const BlogItem = ({ blog }:BlogItemProps) => {
+  return (
+    <Link
+      href={`/blog/${blog.slug.current}`}
+      className="block p-5 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 my-8"
+    >
+      <article>
+        <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-700">
+          {blog.title}
+        </h3>
+        <p className="mb-3 font-normal text-sm text-gray-600">
+          {new Date(blog.publishedAt).toDateString()}
+        </p>
+
+        <p className="mb-3 font-normal text-gray-600">
+          {blog.metadata.slice(0, 140)}...
+        </p>
+      </article>
+    </Link>
   );
 };
 
-export default Header;
+export default BlogItem;
