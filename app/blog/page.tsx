@@ -7,9 +7,6 @@ interface PageParams {
   slug: string;
 }
 
-interface Author {
-  name: string;
-}
 
 
 
